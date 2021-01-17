@@ -11,49 +11,59 @@
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
     <script src="gesture-detector.js"></script>
     <script src="gesture-handler.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/webcam-easy/dist/webcam-easy.min.js"></script>
 </head>
 
 <body>
-<a-scene
-        arjs
-        embedded
-        renderer="logarithmicDepthBuffer: true;"
-        vr-mode-ui="enabled: false"
-        gesture-detector
-        id="scene"
->
-    <a-assets>
-        <a-asset-item
-                id="monkey"
-                src="monkey.gltf"
-        >
-        </a-asset-item>
-        <img id="transpImage" src="person1.jpg">
-    </a-assets>
 
-    <a-marker
-            preset="hiro"
-            raycaster="objects: .clickable"
-            emitevents="true"
-            cursor="fuse: false; rayOrigin: mouse;"
-            id="markerA"
+
+    <a-scene
+            arjs
+            embedded
+            renderer="logarithmicDepthBuffer: true;"
+            vr-mode-ui="enabled: false"
+            gesture-detector
+            id="scene"
     >
-<!--        <a-entity-->
-<!--                id="monkey-model"-->
-<!--                gltf-model="#monkey"-->
-<!--                position="0 0 0"-->
-<!--                scale="1 1 1"-->
-<!--                class="clickable"-->
-<!--                gesture-handler-->
-<!--        >-->
-<!--        </a-entity>-->
-        <a-image width="1" height="1" src="#transpImage" rotation = "90, 180, 0"></a-image>
-    </a-marker>
-    <a-entity camera></a-entity>
-</a-scene>
+        <a-assets>
+            <a-asset-item
+                    id="monkey"
+                    src="monkey.gltf"
+            >
+            </a-asset-item>
+            <img id="transpImage" src="person1.jpg">
+            <video id="webcam" autoplay playsinline width="640" height="480"></video>
+        </a-assets>
 
+        <a-marker
+                preset="hiro"
+                raycaster="objects: .clickable"
+                emitevents="true"
+                cursor="fuse: false; rayOrigin: mouse;"
+                id="markerA"
+        >
+            <!--        <a-entity-->
+            <!--                id="monkey-model"-->
+            <!--                gltf-model="#monkey"-->
+            <!--                position="0 0 0"-->
+            <!--                scale="1 1 1"-->
+            <!--                class="clickable"-->
+            <!--                gesture-handler-->
+            <!--        >-->
+            <!--        </a-entity>-->
+            <a-box position="0 0 0" scale = "1 0.01 1" rotation="0 0 0" shadow material="src: #webcam"></a-box>
+        </a-marker>
+        <a-entity camera></a-entity>
+    </a-scene>
+    <canvas id="canvas" class="d-none"></canvas>
+
+    <img id="img1" sry="bike.jpg">
 <script>
-    document.getElementById("monkey-model").setAttribute("gltf-model", "cube.gltf")
+    const webcamElement = document.getElementById('webcam');
+    const canvas = document.getElementById('canvas');
+    const webcam = new Webcam(webcamElement, 'user', canvas);
+    webcam.start()
+    
 </script>
 </body>
 </html>
