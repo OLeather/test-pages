@@ -9,6 +9,8 @@
 
     <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/body-pix@2.0"></script>
     <script src="gesture-detector.js"></script>
     <script src="gesture-handler.js"></script>
     <script type="text/javascript" src="https://unpkg.com/webcam-easy/dist/webcam-easy.min.js"></script>
@@ -31,8 +33,8 @@
                     src="monkey.gltf"
             >
             </a-asset-item>
-            <img id="transpImage" src="person1.jpg">
-            <video id="webcam" autoplay playsinline width="640" height="480"></video>
+            <img id="imgAsset" src="person1.jpg">
+            <video id="webcam1" autoplay playsinline width="640" height="480"></video>
         </a-assets>
 
         <a-marker
@@ -51,19 +53,50 @@
             <!--                gesture-handler-->
             <!--        >-->
             <!--        </a-entity>-->
-            <a-box position="0 0 0" scale = "1 0.01 1" rotation="0 0 0" shadow material="src: #webcam"></a-box>
+            <a-box position="0 0 0" scale = "1 0.01 1" rotation="0 0 0" shadow material="src: #imgAsset"></a-box>
         </a-marker>
         <a-entity camera></a-entity>
     </a-scene>
     <canvas id="canvas" class="d-none"></canvas>
-
-    <img id="img1" sry="bike.jpg">
+    <canvas id="canvas1" class="d-none"></canvas>
+    <video id="webcam" autoplay playsinline width="640" height="480"></video>
 <script>
     const webcamElement = document.getElementById('webcam');
     const canvas = document.getElementById('canvas');
     const webcam = new Webcam(webcamElement, 'user', canvas);
     webcam.start()
-    
+
+    var net
+    async function loadBodyPix() {
+        net = await bodyPix.load({
+            architecture: 'MobileNetV1',
+            outputStride: 16,
+            multiplier: 0.75,
+            quantBytes: 2
+        });
+    }
+
+    async function predict() {
+        const opacity = 1;
+        const flipHorizontal = true;
+        const maskBlurAmount = 0;
+        const segmentation = await net.segmentPerson(webcamElement,{
+            flipHorizontal: true,
+            internalResolution: 'full',
+            segmentationThreshold: .7
+        });
+
+        const coloredPartImage = bodyPix.toMask(segmentation);
+        bodyPix.drawMask(
+            document.getElementById("canvas1"), webcamElement, coloredPartImage, opacity, maskBlurAmount,
+            flipHorizontal);
+        var canvas1 = document.getElementById("canvas1");
+        var img    = canvas1.toDataURL("image/png");
+        document.getElementById("imgAsset").src = img
+    }
+
+    loadBodyPix()
+    setInterval(predict,100);
 </script>
 </body>
 </html>
