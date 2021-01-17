@@ -1,28 +1,46 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <script type="text/javascript" src="https://unpkg.com/webcam-easy/dist/webcam-easy.min.js"></script>
-</head>
-<body>
+<script src="https://cdn.jsdelivr.net/gh/aframevr/aframe@1c2407b26c61958baa93967b5412487cd94b290b/dist/aframe-master.min.js"></script>
+<script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
 
-<body>
-<canvas id="canvas" class="d-none"></canvas>
-<canvas id="canvas1" class="d-none"></canvas>
-<video id="webcam" autoplay playsinline width="640" height="480"></video>
-<video id="webcam1" autoplay playsinline width="640" height="480"></video>
+<style>
+    .arjs-loader {
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: rgba(0, 0, 0, 0.8);
+        z-index: 9999;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 
+    .arjs-loader div {
+        text-align: center;
+        font-size: 1.25em;
+        color: white;
+    }
+</style>
 
-<script>
-    const webcamE = document.getElementById('webcam');
-    const webcam1E = document.getElementById('webcam1');
-    const canvas = document.getElementById('canvas1');
-    const canvas1 = document.getElementById('canvas1');
-    const webcam = new Webcam(webcamE, 'user', canvas);
-    const webcam1 = new Webcam(webcam1E, 'enviroment', canvas1);
-    webcam.start()
-    webcam1.start();
-</script>
+<body style="margin : 0px; overflow: hidden;">
+<!-- minimal loader shown until image descriptors are loaded -->
+<div class="arjs-loader">
+    <div>Loading, please wait...</div>
+</div>
+<a-scene
+        vr-mode-ui="enabled: false;"
+        renderer="logarithmicDepthBuffer: true;"
+        embedded
+        arjs="trackingMethod: best; sourceType: webcam;debugUIEnabled: false;"
+>
+    <a-marker-camera preset='hiro'></a-marker-camera>
+        <a-entity
+                gltf-model="https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/AR-js-org/AR.js/master/aframe/examples/image-tracking/nft/trex/scene.gltf"
+                scale="5 5 5"
+                position="50 150 0"
+        >
+        </a-entity>
+    </a-nft>
+    <a-entity camera></a-entity>
+</a-scene>
 </body>
-</html>
