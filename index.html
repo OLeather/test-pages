@@ -20,7 +20,7 @@
 
 
 <a-scene
-        arjs
+        arjs='detectionMode: mono_and_matrix; matrixCodeType:3x3'
         embedded
         renderer="logarithmicDepthBuffer: true;"
         vr-mode-ui="enabled: false"
@@ -37,22 +37,7 @@
         <video id="webcam1" autoplay playsinline width="640" height="480"></video>
     </a-assets>
 
-    <a-marker
-            preset="hiro"
-            raycaster="objects: .clickable"
-            emitevents="true"
-            cursor="fuse: false; rayOrigin: mouse;"
-            id="markerA"
-    >
-        <!--        <a-entity-->
-        <!--                id="monkey-model"-->
-        <!--                gltf-model="#monkey"-->
-        <!--                position="0 0 0"-->
-        <!--                scale="1 1 1"-->
-        <!--                class="clickable"-->
-        <!--                gesture-handler-->
-        <!--        >-->
-        <!--        </a-entity>-->
+    <a-marker type='barcode'  value = '5'>
         <a-image id="imgA" position="0 0 0" scale="1 1 1" rotation="90 0 180" src="#imgAsset"></a-image>
     </a-marker>
     <a-entity camera></a-entity>
