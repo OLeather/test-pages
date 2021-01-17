@@ -28,6 +28,7 @@
                 src="monkey.gltf"
         >
         </a-asset-item>
+        <img id="transpImage" src="person1.jpg">
     </a-assets>
 
     <a-marker
@@ -37,21 +38,22 @@
             cursor="fuse: false; rayOrigin: mouse;"
             id="markerA"
     >
-        <a-entity
-                id="monkey-model"
-                gltf-model="#monkey"
-                position="0 0 0"
-                scale="1 1 1"
-                class="clickable"
-                gesture-handler
-        >
-        </a-entity>
+<!--        <a-entity-->
+<!--                id="monkey-model"-->
+<!--                gltf-model="#monkey"-->
+<!--                position="0 0 0"-->
+<!--                scale="1 1 1"-->
+<!--                class="clickable"-->
+<!--                gesture-handler-->
+<!--        >-->
+<!--        </a-entity>-->
+        <a-image width="1" height="1" src="#transpImage" rotation = "90, 180, 0"></a-image>
     </a-marker>
     <a-entity camera></a-entity>
 </a-scene>
 
 <script>
-    document.getElementById("monkey").src = "cube.gltf"
+    document.getElementById("monkey-model").setAttribute("gltf-model", "cube.gltf")
 </script>
 </body>
 </html>
