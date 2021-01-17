@@ -22,7 +22,7 @@
         id="scene">
 
     <a-marker type='barcode'  value = '5'>
-        <a-image id="imgA" position="0 0 0" scale="1 1 1" rotation="90 0 180" src="#imgAsset"></a-image>
+        <a-image id="imgA" position="0 0 0" scale="1 1 1" rotation="0 0 0" src="person1.jpg"></a-image>
     </a-marker>
 
     <a-entity camera></a-entity>
@@ -32,59 +32,59 @@
 <canvas id="canvas1"></canvas>
 <video id="webcam" autoplay playsinline width="640" height="480"></video>
 <script>
-    const webcamElement = document.getElementById('webcam');
-    const canvas = document.getElementById('canvas');
-    const webcam = new Webcam(webcamElement, 'user', canvas);
-    webcam.start()
-
-    var net
-
-    async function loadBodyPix() {
-        net = await bodyPix.load({
-            architecture: 'MobileNetV1',
-            outputStride: 16,
-            multiplier: 0.75,
-            quantBytes: 2
-        });
-    }
-
-    var count = 0
-
-    async function predict() {
-        const opacity = 1;
-        const flipHorizontal = true;
-        const maskBlurAmount = 0;
-        const segmentation = await net.segmentPerson(webcamElement, {
-            flipHorizontal: true,
-            internalResolution: 'full',
-            segmentationThreshold: .7
-        });
-
-        const coloredPartImage = bodyPix.toMask(segmentation);
-        bodyPix.drawMask(
-            document.getElementById("canvas1"), webcamElement, coloredPartImage, opacity, maskBlurAmount,
-            flipHorizontal);
-
-        var canvas1 = document.getElementById("canvas1");
-        var ctx = canvas1.getContext("2d")
-        var imgData = ctx.getImageData(0, 0, canvas1.width, canvas1.height);
-        for(var i = 0; i < imgData.data.length; i+=4){
-            if(imgData.data[i] === 0 && imgData.data[i+1] === 0 && imgData.data[i+2] === 0){
-                red = imgData.data[i] = 0;
-                green = imgData.data[i+1] = 0;
-                blue = imgData.data[i+2] = 0;
-                alpha = imgData.data[i+3] = 0;
-            }
-        }
-
-        ctx.putImageData(imgData, 0, 0);
-        var img = canvas1.toDataURL("image/png");
-
-        document.getElementById('imgA').setAttribute('src', img)
-    }
-
-    loadBodyPix()
-    setInterval(predict, 100);
+    // const webcamElement = document.getElementById('webcam');
+    // const canvas = document.getElementById('canvas');
+    // const webcam = new Webcam(webcamElement, 'user', canvas);
+    // webcam.start()
+    //
+    // var net
+    //
+    // async function loadBodyPix() {
+    //     net = await bodyPix.load({
+    //         architecture: 'MobileNetV1',
+    //         outputStride: 16,
+    //         multiplier: 0.75,
+    //         quantBytes: 2
+    //     });
+    // }
+    //
+    // var count = 0
+    //
+    // async function predict() {
+    //     const opacity = 1;
+    //     const flipHorizontal = true;
+    //     const maskBlurAmount = 0;
+    //     const segmentation = await net.segmentPerson(webcamElement, {
+    //         flipHorizontal: true,
+    //         internalResolution: 'full',
+    //         segmentationThreshold: .7
+    //     });
+    //
+    //     const coloredPartImage = bodyPix.toMask(segmentation);
+    //     bodyPix.drawMask(
+    //         document.getElementById("canvas1"), webcamElement, coloredPartImage, opacity, maskBlurAmount,
+    //         flipHorizontal);
+    //
+    //     var canvas1 = document.getElementById("canvas1");
+    //     var ctx = canvas1.getContext("2d")
+    //     var imgData = ctx.getImageData(0, 0, canvas1.width, canvas1.height);
+    //     for(var i = 0; i < imgData.data.length; i+=4){
+    //         if(imgData.data[i] === 0 && imgData.data[i+1] === 0 && imgData.data[i+2] === 0){
+    //             red = imgData.data[i] = 0;
+    //             green = imgData.data[i+1] = 0;
+    //             blue = imgData.data[i+2] = 0;
+    //             alpha = imgData.data[i+3] = 0;
+    //         }
+    //     }
+    //
+    //     ctx.putImageData(imgData, 0, 0);
+    //     var img = canvas1.toDataURL("image/png");
+    //
+    //     document.getElementById('imgA').setAttribute('src', img)
+    // }
+    //
+    // loadBodyPix()
+    // setInterval(predict, 100);
 </script>
 </body>
 </html>
