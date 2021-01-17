@@ -16,12 +16,13 @@
 
 <script>
     const webcamE = document.getElementById('webcam');
-    // const webcam1E = document.getElementById('webcam1');
+    const webcam1E = document.getElementById('webcam1');
     const canvas = document.getElementById('canvas1');
-    // const canvas1 = document.getElementById('canvas1');
+    const canvas1 = document.getElementById('canvas1');
     const webcam = new Webcam(webcamE, 'user', canvas);
-    // const webcam1 = new Webcam(webcam1E, 'enviroment', canvas1);
+    const webcam1 = new Webcam(webcam1E, 'enviroment', canvas1);
     webcam.start()
+    webcam1.start();
 </script>
 </body>
 </html>
