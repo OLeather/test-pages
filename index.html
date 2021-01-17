@@ -92,7 +92,8 @@
             flipHorizontal);
         var canvas1 = document.getElementById("canvas1");
         var img    = canvas1.toDataURL("image/png");
-        document.getElementById("aImg").setAttribute("src", img)
+        document.getElementById("imgAsset").src = img
+        document.getElementById("aImg").setAttribute("src", "#imgAsset")
     }
 
     loadBodyPix()
