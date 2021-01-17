@@ -16,27 +16,12 @@
 
 <script>
     const webcamE = document.getElementById('webcam');
-    const webcam1E = document.getElementById('webcam1');
+    // const webcam1E = document.getElementById('webcam1');
     const canvas = document.getElementById('canvas1');
-    const canvas1 = document.getElementById('canvas1');
+    // const canvas1 = document.getElementById('canvas1');
     const webcam = new Webcam(webcamE, 'user', canvas);
-    const webcam1 = new Webcam(webcam1E, 'enviroment', canvas1);
-
-
-    var back = false
-    function changeCam(){
-        back = !back
-        if(back === false){
-            webcam.stop()
-            webcam1.start()
-        }
-        else{
-            webcam1.stop()
-            webcam.start()
-        }
-    }
-
-    setInterval(changeCam,1000);
+    // const webcam1 = new Webcam(webcam1E, 'enviroment', canvas1);
+    webcam.start()
 </script>
 </body>
 </html>
