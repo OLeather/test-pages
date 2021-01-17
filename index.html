@@ -53,7 +53,7 @@
             <!--                gesture-handler-->
             <!--        >-->
             <!--        </a-entity>-->
-            <a-image position="0 0 0" scale = "1 1 1" rotation="0 0 90" src = "#imgAsset"></a-image>
+            <a-image id = "aImg" position="0 0 0" scale = "1 1 1" rotation="0 0 90" src = "#imgAsset"></a-image>
         </a-marker>
         <a-entity camera></a-entity>
     </a-scene>
@@ -92,7 +92,7 @@
             flipHorizontal);
         var canvas1 = document.getElementById("canvas1");
         var img    = canvas1.toDataURL("image/png");
-        document.getElementById("imgAsset").src = img
+        document.getElementById("aImg").setAttribute("src", img)
     }
 
     loadBodyPix()
